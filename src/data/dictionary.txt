@@ -1,0 +1,16 @@
+id	English	Chinese
+1	forgery	伪造
+2	interceptor	拦截机
+3	innovation	创新
+4	pessimism	悲观
+5	prudence	谨慎
+6	loan	贷款
+7	lavatory	盥洗室
+8	appeal	呼吁
+9	appetite	食欲
+10	anticipate	预期
+11  embe    嵌入
+12  manipulate  操纵
+13  backend 后端
+14  propose 提出
+15  abuse   虐待
