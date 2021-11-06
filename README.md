@@ -1,6 +1,10 @@
 # memory
 
 > for my CET!
+为了记单词，来玩游戏吧
+(当前有两个游戏)
+试玩地址
+http://47.97.42.118/html/memory/dist/index.html#/
 
 ## Build Setup
 
