@@ -1,14 +1,6 @@
 <template>  
   <div class='view'>
-    <div class='description'>
-      <div class='icon'>?</div>
-      <div class='description-text'>
-        说明<br>
-        1)当前账号公用，卡组也公用。<br>
-        2)切换到选中页后，在两个输入框内添加一对单词与释义，然后点击提交。<br>
-        3)选中想要进行记忆的卡组，然后点击 start game，开始配对游戏吧！
-      </div>
-    </div>
+    <help pageTitle="index"></help>
     <div class='tag-bar' ref='pageTags'>
       <div v-for='(e,i) in memoryData' :key='i'
         class='page-tag' :class='[{selected:selectedIndex==i}]'
@@ -47,8 +39,9 @@
 </template>
 
 <script>
-
+import Help from './Help/Help'
 export default {
+  components:{Help},
   data () {
     return {
       memoryData:{},
@@ -130,36 +123,6 @@ export default {
 <style lang='less' scoped>
 .view{
   margin-top:40px;
-  .description{
-    position:fixed;
-    top:10px;
-    right:10px;
-    z-index: 10;
-    .icon{
-      height:24px;
-      width:24px;
-      line-height: 24px;
-      border-radius: 12px;
-      color: white;
-      background-color: grey;
-    }
-    .description-text{
-      position:fixed;
-      display: none;
-      width:80%;
-      padding:5%;
-      right:1%;
-      color: white;
-      background-color: grey;
-      border-radius: 12px;
-      text-align: left;
-    }
-  }
-  .description:hover{
-    .description-text{
-      display: block;
-    }
-  }
 }
 .tag-bar{
   position: relative;

@@ -1,5 +1,6 @@
 <template>
   <div class='view'>
+    <help pageTitle="gameTwo"></help>
     <div class="game-container">
       <div class="flying card"
        v-if="currentIndex!=-1"
@@ -20,8 +21,11 @@
 </template>
 
 <script>
-
+import Help from '../Help/Help'
 export default {
+  components:{
+    Help
+  },
   data () {
     return {
       currentGroup: null,
@@ -30,7 +34,8 @@ export default {
         left: "20px",
         top: "30px"
       },
-      flyingHandler: null
+      flyingMoveHandler: null,
+      flyingChangeHandler: null
     }
   },
   created(){
@@ -52,27 +57,28 @@ export default {
       }
     },
     start(){
-      this.currentIndex = Math.floor(Math.random()*this.currentGroup.length)
-      this.flyingHandler = setInterval(()=>{
-        if( this.currentGroup.length>0 )
-          this.currentIndex = Math.floor(Math.random()*this.currentGroup.length)
-        else{
-          clearTimeout(this.flyingHandler)
-        }
-      },10000)
-      setInterval(()=>{
-        this.flyingPosition.top = Math.floor(Math.random()*400)+'px'
-        this.flyingPosition.left = Math.floor(Math.random()*225)+'px'
-      },3000)
+      this.newFlyingCard()
+    },
+    newFlyingCard(){
+      if( this.currentGroup.length>0 ){
+        this.currentIndex = Math.floor(Math.random()*this.currentGroup.length)
+        clearTimeout(this.flyingChangeHandler)
+        clearTimeout(this.flyingMoveHandler)
+        this.flyingChangeHandler = setInterval( ()=>this.newFlyingCard(), 10000)
+        this.flyingMoveHandler = setInterval( ()=>this.flyMove(), 3000)
+      }
+      else{
+        this.currentIndex = -1
+      }
+    },
+    flyMove(){
+      this.flyingPosition.top = Math.floor(Math.random()*400)+'px'
+      this.flyingPosition.left = Math.floor(Math.random()*225)+'px'
     },
     shoot(e){
       if(e.id==this.currentGroup[this.currentIndex].id){
         this.currentGroup.splice(this.currentIndex,1)
-        if(this.currentGroup.length>0)
-          this.currentIndex = Math.floor(Math.random()*this.currentGroup.length)
-        else{
-          this.currentIndex = -1
-        }
+        this.newFlyingCard()
       }
     }
   }
@@ -90,7 +96,7 @@ export default {
   position: relative;
   width: 300px;
   height: 500px;
-  border: springgreen solid 1px;
+  border: #99CCFF solid 1px;
   margin: 0 auto;
   .card {
     position: absolute;
@@ -98,7 +104,7 @@ export default {
     height: 50px;
     line-height: 50px;
     border-radius: 50%;
-    border: springgreen solid 1px;
+    border: #99CCFF solid 1px;
   }
   .flying{
     border: slateblue solid 1px;
