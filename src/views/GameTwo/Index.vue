@@ -9,7 +9,7 @@
       <div v-for="(e,i) in currentGroup" :key="i"
        class="card"
        :style="{ top: Math.floor(e.position/4)*50+'px',left: (e.position%4)*75+'px'  }"
-       @click="shoot(e)"
+       @click="shoot(e,$event.target)"
       >
         {{e.part1}}
       </div>
@@ -75,10 +75,27 @@ export default {
       this.flyingPosition.top = Math.floor(Math.random()*400)+'px'
       this.flyingPosition.left = Math.floor(Math.random()*225)+'px'
     },
-    shoot(e){
-      if(e.id==this.currentGroup[this.currentIndex].id){
+    shoot(e,el){
+
+      let deleteCard = ()=>{
+        el.classList.remove("match-right")
         this.currentGroup.splice(this.currentIndex,1)
         this.newFlyingCard()
+        el.removeEventListener("animationend",deleteCard)
+      }
+
+      if(e.id==this.currentGroup[this.currentIndex].id){
+        el.classList.add("match-right")
+        el.addEventListener("animationend",deleteCard)
+      }
+      else {
+        //el.style.animationName = "matchWrong"
+        //el.style.animation = "matchWrong 1s"
+        el.classList.add("match-error")
+        el.addEventListener("animationend",()=>{
+          //el.style.animationName = ""
+          el.classList.remove("match-error")
+        })
       }
     }
   }
@@ -116,6 +133,44 @@ export default {
 .return {
   position: fixed;
   bottom: 20px;
+}
+
+.match-error {
+  animation: 
+    matchWrong 0.3s,
+    flutter 0.2s ease-in-out 0s 30 normal;
+}
+.match-right {
+  animation: match-right 0.3s;
+}
+
+@keyframes matchWrong
+{
+	0%   {
+    box-shadow: 0 0 0 0 rgb(255, 1, 1);
+  }
+	100% {
+    box-shadow: 0 0 2px 10px rgba(255, 1, 1,0);
+  }
+}
+
+@keyframes match-right
+{
+	0%   {
+    box-shadow: 0 0 0 0 rgb(153, 204, 255); 
+  }
+	100% {
+    box-shadow: 0 0 2px 10px rgba(153, 204, 255,0);
+  }
+}
+
+@keyframes flutter {
+  0% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(1px);
+  }
 }
 
 </style>
