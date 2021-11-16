@@ -5,29 +5,31 @@
       <div class="flying card"
        v-if="currentIndex!=-1"
        :style="flyingPosition"
-      >{{currentGroup[currentIndex].part2}}</div>
+      >{{currentGroup[currentIndex][type1]}}</div>
       <div v-for="(e,i) in currentGroup" :key="i"
        class="card"
        :style="{ top: Math.floor(e.position/4)*50+'px',left: (e.position%4)*75+'px'  }"
        @click="shoot(e,$event.target)"
       >
-        {{e.part1}}
+        {{e[type2]}}
       </div>
     </div>
-    <div class='return' @click="$router.push({path:'/'})">
-      退出
-    </div>
+    <controller :option="controllerOption"></controller>
   </div>    
 </template>
 
 <script>
 import Help from '../Help/Help'
+import Controller from "@/views/Controller/Controller.vue"
 export default {
   components:{
-    Help
+    Help,
+    Controller
   },
   data () {
     return {
+      type1: "part1",
+      type2: "part2",
       currentGroup: null,
       currentIndex: 0,
       flyingPosition:{
@@ -35,7 +37,22 @@ export default {
         top: "30px"
       },
       flyingMoveHandler: null,
-      flyingChangeHandler: null
+      flyingChangeHandler: null,
+      controllerOption: [
+        {
+          name: "退出",
+          fun: ()=>{
+            this.$router.push({path:'/'})
+          }
+        },{
+          name: "切换",
+          fun: ()=>{
+            let temp = this.type1
+            this.type1 = this.type2
+            this.type2 = temp
+          }
+        }
+      ]
     }
   },
   created(){
@@ -129,10 +146,6 @@ export default {
     background-color: white;
     z-index: 1;
   }
-}
-.return {
-  position: fixed;
-  bottom: 20px;
 }
 
 .match-error {
