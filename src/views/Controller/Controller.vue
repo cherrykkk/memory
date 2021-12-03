@@ -1,6 +1,6 @@
 <template>
   <div class="controller">
-    <div v-for="(e,i) in option" :key="i" class="card" @click="e.fun">
+    <div v-for="(e,i) in option" :key="i" class="card" @click="e.func">
     {{e.name}}
     </div>
   </div>
@@ -17,13 +17,13 @@ export default {
 </script>
 <style lang="less" scoped>
 .controller {
-  position: absolute;
-  bottom: 10px;
-  display: flex;
+  position: relative;
   width: 100%;
+  height: 40px;
+  display: flex;
   justify-content: space-around;
   .card {
-    box-shadow: 0 0 2px 2px;
+    line-height: 40px;
   }
 }
 </style>

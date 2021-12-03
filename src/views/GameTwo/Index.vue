@@ -1,5 +1,5 @@
 <template>
-  <div class='view'>
+  <div class='view' style="backgroundImage: url(static/sea.jpg)">
     <help pageTitle="gameTwo"></help>
     <div class="game-container">
       <div class="flying card"
@@ -7,14 +7,14 @@
        :style="flyingPosition"
       >{{currentGroup[currentIndex][type1]}}</div>
       <div v-for="(e,i) in currentGroup" :key="i"
-       class="card"
+       class="card2"
        :style="{ top: Math.floor(e.position/4)*50+'px',left: (e.position%4)*75+'px'  }"
        @click="shoot(e,$event.target)"
       >
         {{e[type2]}}
       </div>
     </div>
-    <controller :option="controllerOption"></controller>
+    <controller :option="controllerOption" class="controller"></controller>
   </div>    
 </template>
 
@@ -41,12 +41,12 @@ export default {
       controllerOption: [
         {
           name: "退出",
-          fun: ()=>{
+          func: ()=>{
             this.$router.push({path:'/'})
           }
         },{
           name: "切换",
-          fun: ()=>{
+          func: ()=>{
             let temp = this.type1
             this.type1 = this.type2
             this.type2 = temp
@@ -123,28 +123,49 @@ export default {
 <style lang="less" scoped>
 
 .view {
-  width:100%;
-  margin-top:40px;
-}
-.game-container {
-  position: relative;
-  width: 300px;
-  height: 500px;
-  border: #99CCFF solid 1px;
-  margin: 0 auto;
-  .card {
-    position: absolute;
-    width: 75px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    border: #99CCFF solid 1px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-size: cover;
+  .game-container {
+    position: relative;
+    width: 300px;
+    height: 500px;
+    margin: 0 auto;
+    .card {
+      position: absolute;
+      width: 75px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      border: #99CCFF solid 1px;
+      background-color: rgba(255,255,255,0.6);
+    }
+    .card2 {
+      position: absolute;
+      width: 65px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 6px;
+      border: rgba(255,255,255,0.2) solid 1px;
+      background-color: rgba(255,255,255,0.1);
+      box-shadow: 0 5px 35px rgba(0,0,0,0.4);
+      color: white;
+    }
+    .flying{
+      border: slateblue solid 1px;
+      transition: 2s;
+      background-color: rgba(0,225,255,0.8);
+      z-index: 1;
+    }
   }
-  .flying{
-    border: slateblue solid 1px;
-    transition: 2s;
-    background-color: white;
-    z-index: 1;
+  .controller {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 0 0 2px 2px white;
+    color: white;
   }
 }
 

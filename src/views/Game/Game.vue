@@ -1,9 +1,9 @@
 <template>
   <div class='view'>
     <div v-for='(e,i) in upseted' :key='i'>
-        <card 
-        :part='e.part' :cardId='e.id' :cardUp="e.up" @click.native='turnOver(e)'
-        :width='cardWidth' :height='cardHeight'></card>
+      <card 
+      :part='e.part' :cardId='e.id' :cardUp="e.up" @click.native='turnOver(e)'
+      :width='cardWidth' :height='cardHeight'></card>
     </div>
     <controller :option="controllerOption"></controller>
   </div>    
@@ -28,12 +28,12 @@ export default {
       controllerOption: [
         {
           name: "返回",
-          fun: ()=>{
+          func: ()=>{
             this.$router.push({path:'/'})
           }
         },{
           name: "选择皮肤",
-          fun: ()=>{
+          func: ()=>{
             console.log("该功能还没做呢")
           }
         }
@@ -119,12 +119,8 @@ export default {
 <style scoped>
 
 .view{
-    width:100%;
-    margin-top:40px;
-}
-.return{
-    position: fixed;
-    bottom: 20px;
+  width:100%;
+  margin-top:40px;
 }
 
 </style>
